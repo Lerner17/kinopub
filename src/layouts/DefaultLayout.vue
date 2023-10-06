@@ -11,17 +11,14 @@
         </div> 
       </div>
       <base-list>
-      <router-link to="/asdasjdlkas">sdsad</router-link>
-        <base-list-item link to="/" class="BaseListItem--focused" v-focus>
-          <base-icon />
+      <base-list-item to="/" class="BaseListIte focusable" @click="navigate">
+        <base-icon />
           <span class="ml-6">Новинки</span>
-        </base-list-item> 
-        <router-link to="/about" class="focusable">
-          <base-list-item>
-            <base-icon />
-            <span class="ml-6">Каталг</span>
-          </base-list-item>
-      </router-link>
+      </base-list-item> 
+      <base-list-item class="BaseListIte focusable" @click="navigate">
+          <base-icon />
+          <span class="ml-6">Каталог</span>
+      </base-list-item> 
         <base-list-item>
           <base-icon />
           <span class="ml-6">Я смотрю</span>
@@ -44,7 +41,9 @@
         </base-list-item>
       </base-list>
     </base-drawer>
-    <slot></slot>
+    <div class="DefaultLayout__content">
+      <slot></slot>
+   </div>
   </div>
 </template>
 
@@ -63,6 +62,28 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
+.DefaultLayout {
+  color: white;
+  font-family: sans-serif;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+
+  &__content {
+    margin-left: 350px;
+    margin-top: 50px;
+    margin-right: 20px;
+    width: 100%; 
+    height: calc(100% - 100px); 
+    overflow-x: hidden; 
+    overflow-y: scroll; 
+    -webkit-overflow-scrolling: touch; 
+    padding: 20px; 
+  }
+}
+
 .Drawer__avatar_block {
   display: flex;
   flex-direction: column;
