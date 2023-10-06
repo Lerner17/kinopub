@@ -1,15 +1,13 @@
 <template>
   <div>
-    {{ testStore.test }}
+    <DefaultLayout>
+      <router-view />
+    </DefaultLayout>
   </div>
 </template>
 
 <script setup>
-import { useTestStore } from './stores/Test.store'
-
-const url = 'https://jsonplaceholder.typicode.com/posts/1';
-
-const testStore = useTestStore();
+import DefaultLayout from './layouts/DefaultLayout';
 </script>
 
 <style>
