@@ -1,17 +1,15 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+    {{ testStore.test }}
+  </div>
 </template>
 
-<script>
-import HelloWorld from './components/HelloWorld.vue'
+<script setup>
+import { useTestStore } from './stores/Test.store'
 
-export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+const url = 'https://jsonplaceholder.typicode.com/posts/1';
+
+const testStore = useTestStore();
 </script>
 
 <style>
