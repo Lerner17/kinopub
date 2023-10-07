@@ -1,10 +1,12 @@
 <template>
-  <DefaultLayout>
+  <DefaultLayout v-if="false">
     <router-view />
   </DefaultLayout>
+  <CodeLayout v-else></CodeLayout>
 </template>
 
 <script setup>
+import CodeLayout from './layouts/CodeLayout.vue';
 import DefaultLayout from './layouts/DefaultLayout';
 </script>
 
