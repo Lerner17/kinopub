@@ -6,7 +6,13 @@
       <h1 class="mt-12 mb-2">Новинки</h1>
       <div class="subtitle">Самое новое на кинопабе</div>
       <horizontal-scroll class="mt-5">
-        <film-item   v-for="index in 50" :key="index" class="ml-3 mr-3"></film-item>
+        <film-item 
+          v-for="movie in movies"
+          :key="movie"
+          class="ml-3 mr-3"
+          :title="movie.title"
+          :poster="movie.posters.medium"
+        ></film-item>
       </horizontal-scroll>
     </section>
   </div>
@@ -18,6 +24,17 @@ import HorizontalScroll from '@/components/HorizontalScroll.vue';
 import FilmItem from '@/components/FilmItem';
 
 import { useStore } from 'vuex';
+
+import { movieApi } from '@/api/movie';
+import { onMounted, ref } from 'vue';
+
+const movies = ref([]);
+
+onMounted(async () => {
+  const result = await movieApi().getMovies();
+  movies.value = result?.items ?? [];
+
+});
 
 const store = useStore();
 

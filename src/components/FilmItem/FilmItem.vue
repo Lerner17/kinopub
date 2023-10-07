@@ -1,14 +1,32 @@
 <template>
   <router-link class="FilmItem" to="1">
-    <div class="FilmItem__cover"></div>
+    <div class="FilmItem__cover" :style="`background-image: url('${props.poster}');`"></div>
     <div class="FilmItem__title">
-      Title
+      {{ props.title }}
     </div>
     <div class="FilmItem__gener">
       Ужасы
     </div>
   </router-link>
 </template>
+
+<script setup>
+import { defineProps } from 'vue';
+
+const props = defineProps({
+  title: {
+    type: String,
+    required: true,
+    default: ''
+  },
+  poster: {
+    type: String,
+    required: true,
+    default: ''
+  }
+})
+
+</script>
 
 <style lang="scss">
 
@@ -18,7 +36,6 @@
     width: 200px;
     height: 300px;
     border-radius: 10px;
-    background-image: url('https://cdn.srvkp.com/poster/item/big/63.jpg');
     background-position: center;
     background-size: cover;
   }
@@ -35,9 +52,13 @@
 
   &__title {
     color: white;
+    max-width: 200px;
     font-weight: bold;
     font-size: 20px;
     margin-top: 20px;
+    white-space: nowrap; /* Prevent text from wrapping to the next line */
+    overflow: hidden; /* Hide overflowing content */
+    text-overflow: ellipsis;
   }
   &__gener {
     margin-top: 5px;
