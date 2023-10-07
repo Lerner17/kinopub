@@ -1,17 +1,17 @@
 <template>
-  <DefaultLayout v-if="authStore.access_token">
+  <DefaultLayout v-if="store.getters.getAccessToken">
     <router-view />
   </DefaultLayout>
   <CodeLayout v-else></CodeLayout>
 </template>
 
 <script setup>
+import { useStore } from 'vuex';
+
 import CodeLayout from './layouts/CodeLayout.vue';
 import DefaultLayout from './layouts/DefaultLayout';
 
-import { useAuthStore } from '@/store/Auth.store';
-
-const authStore = useAuthStore();
+const store = useStore();
 
 
 </script>

@@ -28,6 +28,7 @@ async function fetchAndSetAuthCode() {
   try {
     const response = await authsApi().fetchAuthCode();
     code.value = response.user_code;
+    console.log(1);
     emitCode(response.code);
   } catch (error) {
     console.error('Error fetching auth code:', error);
@@ -41,7 +42,7 @@ async function startAuthCodeRefreshTimer() {
     code.value = response.user_code;
     emitCode(response.code);
     const timerInterval = parseInt(response.expires_in) * 1000;
-    setInterval(fetchAndSetAuthCode, timerInterval);
+    timerId = setInterval(fetchAndSetAuthCode, timerInterval);
   } catch (error) {
     console.error('Error starting timer:', error);
   }
@@ -50,7 +51,8 @@ async function startAuthCodeRefreshTimer() {
 onMounted(startAuthCodeRefreshTimer);
 
 onUnmounted(() => {
-  timerId?.clear();
+  if (timerId !== null)
+    clearInterval(timerId)
 });
 
 </script>

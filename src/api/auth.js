@@ -2,7 +2,8 @@ import axios from 'axios';
 
 export const authsApi = () => {
 
-  const baseURL = 'https://api.service-kp.com/';
+  // const baseURL = 'https://api.service-kp.com/';
+  const baseURL = 'http://proxy.kpstv.net/';
 
   async function fetchAuthCode() {
     const { data } = await axios.post(

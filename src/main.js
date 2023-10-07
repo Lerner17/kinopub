@@ -3,7 +3,9 @@ import './assets/css/main.scss';
 
 
 import { createApp } from 'vue'
-import { createPinia } from 'pinia'
+// import { createPinia } from 'pinia'
+
+import store from '@/store/store'
 
 import App from './App.vue'
 
@@ -16,7 +18,7 @@ import VueSpatialNavigation from "vue-spatialnavigation";
 
 import { createRouter, createWebHashHistory  } from 'vue-router'
 
-const pinia = createPinia()
+// const pinia = createPinia()
 
 const routes = [
   { path: '/', component: HomePage },
@@ -43,9 +45,9 @@ window.addEventListener('load', function() {
 	SpatialNavigation.focus();
 })
 
-createApp(App).use(router).use(VueSvgInlinePlugin, {
+createApp(App).use(router).use(store).use(VueSvgInlinePlugin, {
 	attributes: {
 		data: [ "src" ],
 		remove: [ "alt" ]
 	}
-}).use(VueSpatialNavigation).use(pinia).mount('#app')
+}).use(VueSpatialNavigation).mount('#app')

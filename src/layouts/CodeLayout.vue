@@ -17,13 +17,14 @@
 </template>
 
 <script setup>
-import { onUnmounted} from 'vue';
+import { onUnmounted } from 'vue';
+
+import { useStore } from 'vuex';
 
 import { authsApi } from '@/api/auth';
 import ActivationCode from '@/components/ActivationCode.vue';
-import { useAuthStore } from '@/store/Auth.store';
 
-const authStore = useAuthStore();
+const store = useStore();
 
 let interval = null;
 
@@ -34,6 +35,7 @@ onUnmounted(() => {
 })
 
 function catchNewCode(code) {
+  console.log(code);
   if (interval !== null) {
     clearInterval(interval);
   }
@@ -49,9 +51,9 @@ function catchNewCode(code) {
       if (!access_token || !refresh_token || !expires_in) {
         throw new Error('TODO ERROR!');
       }
-      authStore.refresh_token = refresh_token;
-      authStore.access_token = access_token;
-      authStore.expires_in = expires_in;
+      store.commit('setAccessToken', access_token);
+      store.commit('setRefreshToken', refresh_token);
+      store.commit('setExpireIn', expires_in);
 
     } catch(err) {
       console.log(err.response.data);
@@ -108,4 +110,4 @@ function catchNewCode(code) {
     }
   }
 }
-</style>
+</style>@/store/store
