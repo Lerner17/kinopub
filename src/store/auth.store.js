@@ -1,8 +1,8 @@
-import { createStore } from 'vuex';
-
-const store = createStore({
+export default {
   state: {
     access_token: null,
+    refresh_token: null,
+    expires_in: Infinity,
   },
   mutations: {
     setAccessToken (state, access_token) {
@@ -23,6 +23,4 @@ const store = createStore({
   getters: {
     getAccessToken: (state) => state.access_token,
   },
-});
-
-export default store;
+};

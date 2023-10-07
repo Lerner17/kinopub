@@ -4,10 +4,10 @@
       <div class="Drawer__avatar_block mt-12 mb-12">
         <base-avatar></base-avatar>
         <div class="Drawer__avatar_block__username pt-4">
-          lerner17
+          {{ user.username }}
         </div>
         <div class="Drawer__avatar_block__status pt-1">
-          активна
+          {{ user?.subscription?.active ?? false ? 'активна' : 'не активна' }} ({{ user?.subscription?.days ?? 0 }} дней)
         </div> 
       </div>
       <base-list>
@@ -47,18 +47,27 @@
   </div>
 </template>
 
-<script>
-import { defineComponent } from 'vue';
-
+<script setup>
 import BaseDrawer from '../componentsUI/BaseDrawer';
 import BaseAvatar from '../componentsUI/BaseAvatar';
 import BaseList, { BaseListItem } from '../componentsUI/BaseList';
 import BaseIcon from '../componentsUI/BaseIcon.vue';
 
-export default defineComponent({
-  name: 'DefaultLayout',
-  components: { BaseDrawer, BaseAvatar, BaseList, BaseListItem, BaseIcon }
+import { userApi } from '@/api/user';
+import { onMounted, ref } from 'vue';
+
+const user = ref({});
+
+
+
+onMounted(async () => {
+  console.log(1);
+  const result = await userApi().fetchCurrentUser();
+  user.value = result.user;
 });
+  
+
+// console.log(response);
 </script>
 
 <style lang="scss">

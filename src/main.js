@@ -5,7 +5,7 @@ import './assets/css/main.scss';
 import { createApp } from 'vue'
 // import { createPinia } from 'pinia'
 
-import store from '@/store/store'
+import store from '@/store'
 
 import App from './App.vue'
 
