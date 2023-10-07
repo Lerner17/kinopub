@@ -4,7 +4,12 @@
 
 <script setup>
 
-import { ref, onMounted, onUnmounted } from 'vue';
+import {
+  ref,
+  onMounted,
+  onUnmounted,
+  defineEmits,
+} from 'vue';
 
 import { authsApi } from '@/api/auth';
 
@@ -12,11 +17,18 @@ const code = ref('');
 
 let timerId = null;
 
+const emit = defineEmits(['onNewCode'])
+
+
+function emitCode(code) {
+  emit('onNewCode', code);
+}
+
 async function fetchAndSetAuthCode() {
   try {
     const response = await authsApi().fetchAuthCode();
-    console.log(response);
     code.value = response.user_code;
+    emitCode(response.code);
   } catch (error) {
     console.error('Error fetching auth code:', error);
   }
@@ -26,8 +38,8 @@ async function startAuthCodeRefreshTimer() {
   console.log('Timer start...');
   try {
     const response = await authsApi().fetchAuthCode();
-    console.log(response);
     code.value = response.user_code;
+    emitCode(response.code);
     const timerInterval = parseInt(response.expires_in) * 1000;
     setInterval(fetchAndSetAuthCode, timerInterval);
   } catch (error) {

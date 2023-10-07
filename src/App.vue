@@ -1,5 +1,5 @@
 <template>
-  <DefaultLayout v-if="false">
+  <DefaultLayout v-if="authStore.access_token">
     <router-view />
   </DefaultLayout>
   <CodeLayout v-else></CodeLayout>
@@ -8,6 +8,12 @@
 <script setup>
 import CodeLayout from './layouts/CodeLayout.vue';
 import DefaultLayout from './layouts/DefaultLayout';
+
+import { useAuthStore } from '@/store/Auth.store';
+
+const authStore = useAuthStore();
+
+
 </script>
 
 <style>

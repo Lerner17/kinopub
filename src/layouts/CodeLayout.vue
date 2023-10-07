@@ -10,14 +10,65 @@
       <div class="CodeLayout__main__info">
         Откройте на компьютере <strong>kino.pub/device</strong><br/>
         и введите следующий код:
-        <activation-code class="mt-10"></activation-code>
+        <activation-code class="mt-10" @on-new-code="catchNewCode"></activation-code>
       </div>
     </main>
   </div>
 </template>
 
 <script setup>
+import { onUnmounted} from 'vue';
+
+import { authsApi } from '@/api/auth';
 import ActivationCode from '@/components/ActivationCode.vue';
+import { useAuthStore } from '@/store/Auth.store';
+
+const authStore = useAuthStore();
+
+let interval = null;
+
+onUnmounted(() => {
+  if (interval !== null) {
+    clearInterval(interval);
+  }
+})
+
+function catchNewCode(code) {
+  if (interval !== null) {
+    clearInterval(interval);
+  }
+  interval = setInterval(async () => {
+    try {
+      const result = await authsApi().checkAuthState(code);
+      console.log(result);
+      const {
+        access_token,
+        refresh_token,
+        expires_in
+      } = result;
+      if (!access_token || !refresh_token || !expires_in) {
+        throw new Error('TODO ERROR!');
+      }
+      authStore.refresh_token = refresh_token;
+      authStore.access_token = access_token;
+      authStore.expires_in = expires_in;
+
+    } catch(err) {
+      console.log(err.response.data);
+      switch (err.response.data.error) {
+        case 'authorization_pending':
+          console.log('continue waiting...');
+          break;
+        case 'bad_verification_code':
+          console.log('Regenerate new code!') // TODO:
+          break;
+        default:
+        console.error(err);
+      }
+    }
+  }, 5000)
+  console.log(interval);
+}
 </script>
 
 <style lang="scss">
