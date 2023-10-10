@@ -1,5 +1,5 @@
 <template>
-  <router-link class="FilmItem" to="1">
+  <router-link class="FilmItem" :to="`movie/${props.id}`">
     <div class="FilmItem__cover" :style="`background-image: url('${props.poster}');`"></div>
     <div class="FilmItem__title">
       {{ props.title }}
@@ -14,6 +14,11 @@
 import { defineProps } from 'vue';
 
 const props = defineProps({
+  id: {
+    type: Number,
+    required: true,
+    default: 0
+  },
   title: {
     type: String,
     required: true,
@@ -32,6 +37,7 @@ const props = defineProps({
 
 .FilmItem {
   border: 4px solid transparent;
+  position: relative;
   &__cover {
     width: 200px;
     height: 300px;
@@ -41,9 +47,9 @@ const props = defineProps({
   }
 
   &:focus {
-    border: 4px solid rgba(255, 255, 255, 0.26);
-    border-radius: 15x;
+    outline: none; /* Убираем стандартное браузерное обводку при фокусировке */
   }
+
 
   &:focus .FilmItem__cover {
     background-size: 105%;

@@ -7,9 +7,10 @@
       <div class="subtitle">Самое новое на кинопабе</div>
       <horizontal-scroll class="mt-5">
         <film-item 
+          class="ml-3 mr-3"
           v-for="movie in movies"
           :key="movie"
-          class="ml-3 mr-3"
+          :id="movie.id"
           :title="movie.title"
           :poster="movie.posters.medium"
         ></film-item>
