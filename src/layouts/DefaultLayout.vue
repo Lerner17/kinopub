@@ -47,6 +47,14 @@
   </div>
 </template>
 
+<script>
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  name: 'DefaultLayout',
+});
+</script>
+
 <script setup>
 import BaseDrawer from '../componentsUI/BaseDrawer';
 import BaseAvatar from '../componentsUI/BaseAvatar';

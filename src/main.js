@@ -9,7 +9,12 @@ import store from '@/store'
 
 import App from './App.vue'
 
-import HomePage from './pages/HomePage.vue'
+import HomePage from './pages/HomePage.vue';
+// import VideoPage from './pages/VideoPage.vue';
+// import DefaultLayout from '@/layouts/DefaultLayout.vue';
+// import FullScreenLayout from '@/layouts/FullScreenLayout.vue';
+
+import MoviePage from './pages/MoviePage.vue';
 
 import SpatialNavigation from 'spatial-navigation-js';
 
@@ -17,11 +22,26 @@ import VueSvgInlinePlugin from "vue-svg-inline-plugin";
 import VueSpatialNavigation from "vue-spatialnavigation";
 
 import { createRouter, createWebHashHistory  } from 'vue-router'
+// import PlayerLayoutVue from './layouts/PlayerLayout.vue';
 
 // const pinia = createPinia()
 
 const routes = [
   { path: '/', component: HomePage },
+  // {
+	// 	path: '/video',
+	// 	component: VideoPage,
+	// 	// meta:{
+	// 	// 	layout: 'player-layout'
+	// 	// },
+	// },
+  {
+		path: '/movie/:id',
+		component: MoviePage,
+		// meta:{
+		// 	layout: 'fullscreen-layout'
+		// },
+	},
 ]
 
 const router = createRouter({
@@ -45,9 +65,16 @@ window.addEventListener('load', function() {
 	SpatialNavigation.focus();
 })
 
-createApp(App).use(router).use(store).use(VueSvgInlinePlugin, {
+createApp(App)
+	// .component('default-layout', DefaultLayout)
+	// .component('player-layout', PlayerLayoutVue)
+	// .component('fullscreen-layout', FullScreenLayout)
+	.use(router)
+	.use(store)
+	.use(VueSvgInlinePlugin, {
 	attributes: {
 		data: [ "src" ],
 		remove: [ "alt" ]
 	}
-}).use(VueSpatialNavigation).mount('#app')
+})
+.use(VueSpatialNavigation).mount('#app')
