@@ -7,7 +7,11 @@ export default createRouter({
     {
       path: '/',
       component: HomePage,
+      meta:{
+        layout: 'login-required-layout',
+      },
     },
+    
     // {
     //   path: '/about',
     //   component: () => import('@/views/About.vue'),

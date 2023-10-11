@@ -1,13 +1,17 @@
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
 
+import SpatialNavigation from 'spatial-navigation-js';
+
 import router from './router'
 import App from './App.vue';
 import vuetify from './plugins/vuetify';
 
+import { VueQueryPlugin } from '@tanstack/vue-query';
 import { loadFonts } from './plugins/webfontloader';
 
-import SpatialNavigation from 'spatial-navigation-js';
+import DefaultLayout from '@/layouts/DefaultLayout.vue';
+import LoginRequiredLayout from '@/layouts/LoginRequiredLayout.vue';
 
 
 window.addEventListener('load', function() {
@@ -28,6 +32,9 @@ window.addEventListener('load', function() {
 loadFonts()
 
 createApp(App)
+  .component('default-layout', DefaultLayout)
+  .component('login-required-layout', LoginRequiredLayout)
+	.use(VueQueryPlugin)
   .use(router)
   .use(createPinia())
   .use(vuetify)

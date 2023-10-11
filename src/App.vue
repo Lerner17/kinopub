@@ -1,24 +1,15 @@
 <template>
-  <v-app>
-    <v-main>
-      <RouterView />
-    </v-main>
-  </v-app>
+  <div id="app">
+    <component :is="layout">
+      <router-view />
+    </component>
+  </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
+<script setup lang="ts">
+import { computed } from 'vue';
+import { useRoute } from 'vue-router';
 
-export default defineComponent({
-  name: 'App',
-
-  components: {
-  },
-
-  data () {
-    return {
-      //
-    }
-  },
-})
+const route = useRoute();
+const layout = computed(() => route.meta.layout || 'default-layout');
 </script>
