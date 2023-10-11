@@ -1,5 +1,13 @@
 module.exports = {
   presets: [
-    '@vue/cli-plugin-babel/preset'
-  ]
-}
+    [
+      "@babel/preset-env",
+      {
+        targets: {
+          samsung: "11"
+        }
+      }
+    ]
+  ],
+  plugins: ["@babel/plugin-transform-optional-chaining"]
+};
