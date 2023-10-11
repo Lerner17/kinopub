@@ -1,3 +1,6 @@
+require('polyfill-object.fromentries');
+
+
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
 

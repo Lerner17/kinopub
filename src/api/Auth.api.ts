@@ -2,8 +2,8 @@ import axios from 'axios'
 import { DeviceCodeResponse } from "@/types/auth";
 
 export const useAuthApi = () => {
-  const baseURL = 'https://api.service-kp.com/';
-  // const baseURL = 'http://proxy.kpstv.net/';
+  // const baseURL = 'https://api.service-kp.com/';
+  const baseURL = 'http://proxy.kpstv.net/';
 
   async function fetchAuthCode(): Promise<DeviceCodeResponse> {
     const { data }: { data: DeviceCodeResponse } = await axios.post(
