@@ -3,6 +3,7 @@ require('polyfill-object.fromentries');
 
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 
 import SpatialNavigation from 'spatial-navigation-js';
 
@@ -15,7 +16,7 @@ import { loadFonts } from './plugins/webfontloader';
 
 import DefaultLayout from '@/layouts/DefaultLayout.vue';
 import LoginRequiredLayout from '@/layouts/LoginRequiredLayout.vue';
-
+import { useAuthStore } from '@/stores/Auth.store';
 
 window.addEventListener('load', function() {
 	SpatialNavigation.init();
@@ -34,11 +35,19 @@ window.addEventListener('load', function() {
 
 loadFonts()
 
+router.beforeEach((to, from, next) => {
+	const store = useAuthStore();
+	if (!store.access_token && to.name !== 'Login') {
+		next({ name: 'Login' })
+	}
+	next();
+})
+
 createApp(App)
   .component('default-layout', DefaultLayout)
   .component('login-required-layout', LoginRequiredLayout)
 	.use(VueQueryPlugin)
   .use(router)
-  .use(createPinia())
+  .use(createPinia().use(piniaPluginPersistedstate))
   .use(vuetify)
   .mount('#app')

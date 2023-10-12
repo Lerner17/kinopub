@@ -15,6 +15,7 @@
     "babel-plugin-transform-object-from-entries": "^1.0.0",
     "core-js": "^3.8.3",
     "pinia": "^2.1.6",
+    "pinia-plugin-persistedstate": "^3.2.0",
     "polyfill-object.fromentries": "^1.0.1",
     "roboto-fontface": "*",
     "spatial-navigation-js": "^1.0.0",

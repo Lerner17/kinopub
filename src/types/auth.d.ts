@@ -5,3 +5,18 @@ export interface DeviceCodeResponse {
   expires_in: number;
   interval: number;
 }
+
+export enum CheckCodeStateStatus {
+  BadVerificationCode = 'bad_verification_code',
+  AuthorizationPending = 'authorization_pending',
+}
+
+export interface CheckCodeStateError {
+  status: number,
+  error: CheckCodeStateStatus
+}
+export interface CheckCodeStateResponse {
+  access_token: string;
+  refresh_token: string;
+  expires_in: number;
+}

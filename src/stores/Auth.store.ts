@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 
-export const useAlertsStore = defineStore('auth', {
+export const useAuthStore = defineStore('auth', {
     state: () => ({
     access_token: 'asdsadasd' as string | null,
     refresh_token: null as string | null,
@@ -9,6 +9,7 @@ export const useAlertsStore = defineStore('auth', {
     getters: {
         getAccessToken: (state) => state.access_token,
     },
+    persist: true,
 });
 
 // import { defineStore } from 'pinia';
