@@ -19,47 +19,50 @@
 </template>
 
 <script setup lang="ts">
-import { ref, Ref, watch } from 'vue';
+import { ref, Ref, onBeforeMount} from 'vue';
 
 
 import { useAuthApi } from '@/api/Auth.api'
 import { useQuery } from '@tanstack/vue-query'
+// import { DeviceCodeResponse } from '@/api/dto/auth/auth.dto';
 
 
-let timer: any = null;
+let timer: Ref<any> = ref(null);
 const secondsTotal: Ref<number> = ref(0);
 const secondsLeft: Ref<number> = ref(0);
 
-// const data: Ref<DeviceCodeResponse | null> = ref(null)
 const progress: Ref<number> = ref(100);
 
-const { isLoading,  data, refetch } = useQuery({
+const { isLoading,  data } = useQuery({
   queryKey: ['auth', 'getCode'],
-  queryFn: () => useAuthApi().fetchAuthCode(),
+  refetchOnWindowFocus: false,
+  queryFn: () => {
+    console.log('1222');
+    clearInterval(timer.value);
+    timer.value = null;
+    return useAuthApi().fetchAuthCode();
+  },
+  refetchInterval: 300000,
+  onSuccess: (data) => {
+    secondsTotal.value = data.expires_in
+    timer.value = setInterval(() => {
+      console.log('Iterval')
+      if (secondsLeft.value != secondsTotal.value) {
+        secondsLeft.value++;
+        progress.value =  ((secondsTotal.value - secondsLeft.value) / secondsTotal.value) * 100;
+      } else {
+        console.log('stop');
+        clearInterval(timer.value);
+        timer.value = null;
+      }
+    }, 1000);
+  },
 })
 
-watch(data, (newData) => {
-      console.log(newData);
-      if (newData) {
-        secondsTotal.value = newData.expires_in;
-        secondsLeft.value = 0;
-        startCountDown();
-      }
-  });
-
-async function startCountDown(): Promise<void> {
-  timer = setInterval(async () => {
-    if (secondsLeft.value != secondsTotal.value) {
-      secondsLeft.value++;
-      progress.value =  ((secondsTotal.value - secondsLeft.value) / secondsTotal.value) * 100;
-    } else {
-      clearInterval(timer);
-      timer = null;
-      await refetch();
-    }
-  }, 1000);
-}
-
+onBeforeMount(() => {
+    clearInterval(timer.value);
+    timer.value = null;
+});
 </script>
 
 <style lang="scss">
